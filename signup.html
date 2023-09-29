@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signuppage</title>
+    <style>
+        body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f1f1f1;
+  background-image: url("https://www.shutterstock.com/shutterstock/photos/604575887/display_1500/stock-vector-global-internet-network-security-and-digital-cyber-security-background-concept-604575887.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container {
+  width: 400px;
+  background-color: #0e55e3;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #72e0f1;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #72e0f1;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+    <form method="get" action="signupsubmit">
+        Name<input type="text" name="name" placeholder="enter your Name"><br>
+        Email<input type="email" name="email" placeholder="enter your email"><br>
+        Password<input type="password" name="password" placeholder="enter your password"><br> 
+        <button type="submit">SUBMIT</button>
+    </form>
+</div>
+</body> 
+</html>
