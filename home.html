@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plant Species Database</title>
   <style>
-    /* Reset some default styles to ensure consistency */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -95,23 +94,23 @@ main {
   object-fit: cover;
 }
 
-.plant-info {
+.products {
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.plant-info h3 {
+.products h3 {
   margin-bottom: 1rem;
 }
 
-.plant-info img {
+.products img {
   width: 200px;
   height: 300px;
   margin-bottom: 1rem;
 }
 
-.plant-info p {
+.products p {
   margin-bottom: 0.5rem;
 }
 </style>
@@ -125,353 +124,420 @@ main {
   <main>
     <section class="categories">
       <h2>Categories</h2>
-      <div class="category" onclick="showSpecies('indoor')">
+      <div class="category" onclick="showCategory('indoor')">
         <img src="indoor.jpg" alt="Indoor Plants">
         <span>Indoor Plants</span>
       </div>
-      <div class="category" onclick="showSpecies('fruit')">
+      <div class="category" onclick="showCategory('fruit')">
         <img src="fruit.jpg" alt="Fruit Plants">
         <span>Fruit Plants</span>
       </div>
-      <div class="category" onclick="showSpecies('flowering')">
+      <div class="category" onclick="showCategory('flowering')">
         <img src="flower.jpg" alt="Flowering Plants">
         <span>Flowering Plants</span>
       </div>
-      <div class="category" onclick="showSpecies('outdoor')">
+      <div class="category" onclick="showCategory('outdoor')">
         <img src="outdoor.jpg" alt="Outdoor Plants">
         <span>Outdoor Plants</span>
       </div>
     </section>
-
     <section class="species-list">
       <h2>Species List</h2>
     </section>
 
-    <section class="plant-info">
+    <section class="products">
+      
     </section>
-  </main>
 
+    <div class="cart">
+      <h2>Shopping Cart</h2>
+      <div id="cart-items"></div>
+      <p>Total: <span id="cart-total">$0.00</span></p>
+      <button onclick="checkout()">Checkout</button>
+  </div>
+</main>
   <script>
-    const speciesData = {
+    const speciesData ={
       indoor: [
-        {
-          name: 'Betel Leaf',
-          image: 'betelLeaf.jpeg',
-          importance: 'Betel leaf or pan may help treat digestive issues and promote wound healing. It may be suitable for people with diabetes due to its hypoglycemic properties. The plant exhibits anti-cancer properties that may aid in cancer prevention and promote oral health.',
-          uses: 'Betel leaves are used as a stimulant, an antiseptic, and a breath-freshener.',
-          availability: 'Assam, Andhra Pradesh, Bihar, Gujarat, Odisha, Karnataka, Madhya Pradesh, Rajasthan, West Bengal and Maharashtra.',
-          disadvantages: 'overuse is linked with cancer and addiction.',
-          price: '200/-',
-        },
-        {
-            name: 'money plant golden',
-            image: 'moneyPlantGolden.jpg',
-            importance: 'One of the best benefits of placing a money plant in your house is keeping the home fresh and clean. It removes harmful pollutants in the air like carbon monoxide, xylene, benzene, and toluene. It also eliminates toxins and harmful chemicals present in the air.',
-            uses: 'Air purifier',
-            availability: 'Northern Australia through Southeast Asia into China, Japan, Bangladesh, India and Pakistan.',
-            disadvantages: 'possibility of financial problems, and if you are married, arguments and marital issues as well.',
-            price: '185/-',
-          },
-          {
-            name: 'Aglaonema Lipstick',
-            image: 'aglaonema.jpg',
-            importance: 'The Aglaonema Red Lipstick (Chinese Evergreen) helps to improve the air quality of indoor spaces with the ability to filter indoor air pollutants and toxins. Furthermore, this gorgeous leafy indoor plant emits Oxygen, which assists in increasing productivity and enriching health and well-being both in living and working spaces.',
-            uses: 'Air purifier, decorative plant & interior landscape plant.',
-            availability: ' tropical and sub-tropical areas of Asia',
-            disadvantages: 'swelling of the tongue, drooling, vomiting, and loss of appetite.',
-            price: '369/-',
-          },
-          {
-            name: 'Areca Palm',
-            image: 'ArecaPalm.jpg',
-            importance: 'The areca palm plant is known to increase oxygen levels by absorbing carbon dioxide and releasing more oxygen. Areca palm absorbs toxic substances in the air, like VOCs and pollutants and purifies the air we breathe. Areca palm is pet-friendly and is a safe bet for homes with pets.',
-            uses: 'Air purifierincrease oxygen levels by absorbing carbon dioxide and releasing more oxygen.',
-            availability: 'karnataka, kerala, Assam',
-            disadvantages: 'Yellowing leaves can indicate underwatering, and brown leaf tips are a sign of cold draughts or a dry atmosphere. Areca palms are also prone to attack by red spider mites and mealybugs. Red spider mites are tiny and hard to see, but mottled, yellowing leaves are a sign of their presence.',
-            price: '270/- to 300/-',
-          },
-          {
-            name: 'Lakshmi Tulasi',
-            image: 'lakshmiTulasi.jpeg',
-            importance: ' For centuries, the dried leaves have been mixed with stored grains to repel insects. Tulasi is a sacred plant for Hindus, is worshipped as the avatar of Goddess Lakshmi, may be planted in courtyards of Hindu houses or temples.',
-            uses: 'Tulasi has been used in Ayurveda and Siddha practices for its supposed treatment of diseases.',
-            availability: 'North central Indian',
-            disadvantages: 'can affect the health of a pregnant woman and her embryo.',
-            price: '300/-',
-          },
-          {
-            name: 'aloe vera',
-            image: 'aloeVera.jpeg',
-            importance: 'It contains healthful plant compounds, it has antioxidant and antibacterial properties, it reduces dental plaque and many more',
-            uses: 'Aloe vera has been traditionally used to treat skin injuries (burns, cuts, insect bites, and eczemas) and digestive problems because its anti-inflammatory, antimicrobial, and wound healing properties.',
-            availability: 'Rajasthan, Andhra Pradesh, Gujarat, Tamil Nadu, and Maharashtra.',
-            disadvantages: 'Topical and oral use of Aloe vera can cause skin irritation, hives, cramping, and diarrhea to those who are allergic to other plants in the lily family, for example, onion and tulips.',
-            price: '182/-',
-          },
-      ],
-      fruit: [
-        {
-          name: 'Orange',
-          image: 'orange.jpg',
-          importance: 'The fiber in oranges can keep blood sugar levels in check and reduce high cholesterol to prevent cardiovascular disease.',
-          uses: 'The vitamin C in oranges helps your body in lots of ways: Protects your cells from damage. Helps your body make collagen, a protein that heals wounds and gives you smoother skin. Makes it easier to absorb iron to fight anemia.',
-          availability: 'Telangana, Andhra Pradesh, Maharashtra, Madhya Pradesh, Karnataka, Punjab, Bihar, Assam, Mizoram and Jammu & Kashmir.',
-          disadvantages: 'it can lead to overconsumption of fibre',
-          price: '200/-',
-        },
-        {
-          name: 'Pomegranate',
-          image: 'pomegranate.jpeg',
-          importance: 'Antioxidants protect cells from damage and reduce inflammation and the effects of again',
-          uses: 'THeart health benefits, Anti-inflammatory properties.',
-          availability: 'Maharashtra, Gujarat, Karnataka, Andhra Pradesh, Tamil Nadu, Madhya Pradesh and Rajasthan.',
-          disadvantages: 'Some people have experienced sensitivity to pomegranate extract. Symptoms of sensitivity include itching, swelling, runny nose, and difficulty breathing. The root, stem, or peel of pomegranate is POSSIBLY UNSAFE when taken by mouth in large amounts. The root, stem, and peel contain poisons.',
-          price: '173/-',
-        },
-        {
-          name: 'Lemon',
-          image: 'lemon.jpeg',
-          importance: 'Vitamin C is an antioxidant, which helps protect cells from damage. Vitamin C also helps your body make collagen for your skin, helps your body absorb iron, and supports your immune system.',
-          uses: 'Supports heart health, help to boost immunity.May improve digestion.-Help to control weight',
-          availability: 'Gujarat, Andhra Pradesh, Maharashtra, Karnataka, Tamil Nadu, Bihar, Rajasthan, and Assam',
-          disadvantages: 'it can trigger the development of ulcers. The acid in lemons can harm the stomach and intestinal linings, leading to ulcers',
-          price: '199/-',
-        },
-        {
-          name: 'Mango',
-          image: 'mango.jpeg',
-          importance: "Mango is rich in vitamins, minerals, and antioxidants, and it has been associated with many health benefits, including potential anticancer effects, as well as improved immunity and digestive and eye health. Best of all, it's tasty and easy to add to your diet as part of smoothies and many other dishes.",
-          uses: "potential anticancer effects, as well as improved immunity and digestive and eye health. Best of all, it's tasty and easy to add to your diet as part of smoothies and many other dishes.",
-          availability: 'Andhra Pradesh, Uttar Pradesh, Karnataka, Bihar, Gujarat and Telangana',
-          disadvantages: 'After consuming certain mango species, some people may experience throat pain or allergy (stomach pain, sneezing and runny nose). Consuming mangoes in excess can result in gastrointestinal problems like stomach pain, indigestion and diarrhoea.',
-          price: '150/-',
-        },
-        {
-          name: 'Jack Fruit',
-          image: 'jackFruit.jpg',
-          importance: "Jackfruit is a good source of vitamin C, potassium, dietary fiber, and other important vitamins and minerals. Also, research suggests that compounds in the flesh, seeds, and other parts of the plant may potentially treat or prevent several health conditions. Jackfruit is a popular meat substitute.",
-          uses: "People eat the fruit and seeds of jackfruit tree as food or as medicine. Jackfruit is taken by mouth as an aphrodisiac or for diabetes. Jackfruit paste is applied to the skin for poisonous bites. Also, the wood of the jackfruit tree is used to make furniture or musical instruments.",
-          availability: 'Bihar, West Bengal, Uttar Pradesh, Assam, Orissa, Kerela and Tamil Nadu.',
-          disadvantages: 'After consuming certain mango species, some people may experience throat pain or allergy (stomach pain, sneezing and runny nose). Consuming mangoes in excess can result in gastrointestinal problems like stomach pain, indigestion and diarrhoeaThe high potassium content of Jackfruit can be harmful to people suffering from chronic kidney diseases or acute kidney failure.',
-          price: '154/-',
-        },
-        {
-          name: 'Water Apple',
-          image: 'waterApple.jpg',
-          importance: "It might be effective in reducing the dryness of the skin. Water apples contain a good amount of potassium. It may strengthen muscles and lower muscle cramps caused due to the low level of potassium. Vitamin C of the fruit might enhance the white blood cell production in the blood and also may boost the immune system",
-          uses: "It might be effective in reducing the dryness of the skin. Water apples contain a good amount of potassium. It may strengthen muscles and lower muscle cramps caused due to the low level of potassium.",
-          availability: 'low-elevation, tropical Andra Pradesh, Kerala, and the Western Ghats.',
-          disadvantages: 'While water apples are commercially sold as fully developed fruits, stems, leaves and roots contain trace amounts of hydrocyanic acid and are hence poisonous.Therefore, caution should be exercised before consuming water apples sourced from farms and other organic produce.',
-          price: '199/-',
-        },
-        {
-          name: 'Banana',
-          image: 'banana.jpeg',
-          importance: "They may improve your digestion and heart health, thanks to their fiber and antioxidant content. Plus, they may support weight loss because they're relatively low in calories, nutrient-dense, and filling. Both ripe (yellow) bananas and unripe (green) bananas can satisfy your sweet tooth and help keep you healthy.",
-          uses: "Asthma. A 2007 study suggested that eating bananas might help prevent wheezing in children with asthma. Heart health. Bananas contain fiber, potassium, folate, and antioxidants, such as vitamin C. All of these support heart health. Diabetes.",
-          availability: 'heavy clay soil of the Cauvery delta, alluvial soils of the Gangetic delta, black loam in Maharashtra, coastal sandy loams and the red lateritic soil of the hilly tracts of Kerala.',
-          disadvantages: 'Bananas are one of the best fruit sources of vitamin B6. It helps the body to produce red blood cells, metabolize carbohydrates and fats, metabolize amino acids, remove unwanted chemicals from your liver and kidneys, and maintain a healthy nervous system.',
-          price: '15/- to 20/-',
-        },
-        {
-          name: 'Custard Apple',
-          image: 'custardApple.jpeg',
-          importance: "Custard apple is high in fibers, which helps digestion, prevents constipation, and detoxifies our body.",
-          uses: "Rich in fiber, vitamins, and minerals, this unique fruit may support immunity, reduce inflammation, and promote eye and heart health",
-          availability: 'Andhra Pradesh, Maharashtra, Karnataka, Bihar, Orissa, Assam, and Tamil Nadu.',
-          disadvantages: 'Custard apple seed has toxic effects on the skin and especially eyes. Studies state that application of Custard apple seed powder cause severe pain and redness in the skin. It might also cause extreme eye injury leading to blindness. So it generally advised to avoid the use of preparation of Custard apple seeds',
-          price: '359/-',
-        },
-        {
-          name: 'Amla',
-          image: 'amla.jpeg',
-          importance: "Amla has an important role in the traditional medicine of India to reduce anxiety and burning sensation in skin and eyes, improve anemic condition, favor the health of the male reproductive system and reproduction, facilitate digestion, improve liver health, and also exert a tonic effect in the cardiovascular system",
-          uses: "Helps Fight Against the Common Cold. Lowers Cholesterol Levels. Aids Weight Loss. Improve Digestive Processes.",
-          availability: 'Uttar Pradesh, Gujarat, Maharashtra, Madhya Pradesh, Rajasthan, and Tamil Nadu',
-          disadvantages: 'For some allergic people, intake of Amla products can increase the risk of bleeding. For a diabetic patient, Amla should be taken with proper precautions as its intake can drastically drop blood sugar levels. The dosage of Amla juice can lead to dryness of the skin.',
-          price: '149/-',
-        },
-        {
-          name: 'Guava',
-          image: 'guava.jpeg',
-          importance: "Various parts of the plant, including the leaf and the fruit, are used as medicine. People use guava leaf for stomach and intestinal conditions, pain, diabetes, and wound healing",
-          uses: "People use guava leaf for stomach and intestinal conditions, pain, diabetes, and wound healing.",
-          availability: 'Uttar Pradesh, Gujarat, Maharashtra, Madhya Pradesh, Rajasthan, and Tamil Nadu',
-          disadvantages: 'Guava leaf extract might cause temporary nausea or stomach pain in some people. When applied to the skin: Guava leaf extract is POSSIBLY SAFE when applied to the skin or inside the mouth as a rinse.',
-          price: '199/-',
-        },
-        {
-          name: 'Papaya',
-          image: 'papaya.jpeg',
-          importance: "Papayas contain high levels of antioxidants vitamin A, vitamin C, and vitamin E. Diets high in antioxidants may reduce the risk of heart disease. The antioxidants prevent the oxidation of cholesterol. When cholesterol oxidizes, it's more likely to create blockages that lead to heart diseas",
-          uses: "Papayas contain an enzyme called papain that aids digestion; in fact, it can be used as a meat tenderizer. Papaya is also high in fiber and water content, both of which help to prevent constipation and promote regularity and a healthy digestive tract.",
-          availability: 'Andhra Pradesh, Karnataka, Gujarat, Orissa, West Bengal, Assam, Kerala, Madhya Pradesh and Maharashtra.',
-          disadvantages: 'Papaya should not be consumed in excess as it can cause a variety of respiratory problems, including blocked breathing, wheezing, chronic nasal congestion, fever, and asthma.',
-          price: '129/-',
-        },
-        {
-          name: 'Apple',
-          image: 'apple.jpeg',
-          importance: "decoction and braking as a diuretic, antipyretic, analgesic, treatment for tuberculosis. lungs, rheumatism, boils, diarrhea.",
-          uses: "They're rich in fiber and antioxidants. Eating them is linked to a lower chance of getting many chronic conditions, including diabetes, heart disease, and cancer. Apples may also promote weight loss and improve gut and brain health.",
-          availability: 'Uttar Pradesh, Gujarat, Maharashtra, Madhya Pradesh, Rajasthan, and Tamil Jammu & Kashmir; Himachal Pradesh; hills of Uttar Pradesh and Uttaranchal. It is also cultivated to a small extent in Arunachal Pradesh; Nagaland; Punjab and Sikkim.',
-          disadvantages: "The seeds contain cyanide and are poisonous. Pregnancy and breast-feeding: Apples and apple juice are commonly consumed in the diet. But there isn't enough reliable information to know if apple is safe to use as medicine when pregnant or breast-feeding. Stay on the safe side and stick to food amounts.",
-          price: '160/-',
-        },
-      ],
-      flowering: [
-        {
-          name: 'Jasmine',
-          image: 'jasmine.jpeg',
-          importance: "Jasmine is used on the skin to reduce the amount of breast milk, for skin diseases, and to speed up wound healing. Jasmine is inhaled to improve mood, reduce stress, and reduce food cravings. In foods, jasmine is used to flavor beverages, frozen dairy desserts, candy, baked goods, gelatins, and puddings.",
-          uses: "Jasmine is used on the skin to reduce the amount of breast milk, for skin diseases, and to speed up wound healing. Jasmine is inhaled to improve mood, reduce stress, and reduce food cravings. In foods, jasmine is used to flavor beverages, frozen dairy desserts, candy, baked goods, gelatins, and puddings.",
-          availability: 'Tamil Nadu and Karnataka',
-          disadvantages: "Generally, consuming jasmine tea does not cause any harm. However, it does contain some amount of caffeine, which can cause problems in some people. Consuming too much caffeine can lead to or trigger problems like anxiety, restlessness, stomach problems and nervousness.",
-          price: '199/-',
-        },
-        {
-          name: 'Bhrama Kamala',
-          image: 'brahmaKamala.jpeg',
-          importance: "In spiritual practices, the Brahma Kamal flower is used in religious ceremonies and rituals. It is believed to have the power to purify the mind and soul and to bring inner peace and serenity. It is also said to have the power to protect from negative energy and evil spirits.",
-          uses: "In spiritual practices, the Brahma Kamal flower is used in religious ceremonies and rituals. It is believed to have the power to purify the mind and soul and to bring inner peace and serenity. It is also said to have the power to protect from negative energy and evil spirits.",
-          availability: 'Uttarkhand, Kedarnath, Badri- nath, and Tunganath',
-          disadvantages: "In spiritual practices, the Brahma Kamal flower is used in religious ceremonies and rituals. It is believed to have the power to purify the mind and soul and to bring inner peace and serenity. It is also said to have the power to protect from negative energy and evil spirits",
-          price: '499/-',
-        },
-        {
-          name: 'Roses',
-          image: 'rose.jpeg',
-          importance: "They supply insects with food, provide birds with nesting sites, and shelter small mammal",
-          uses: "Regular consumption of rose tea is good for boosting the immune system and preventing different diseases. Rose tea is good for expelling toxins from the body. Its use is excellent for skincare and hair care. Eating dried rose petals helps in eliminating unwanted body fat and weight loss",
-          availability: 'Maharashtra, Tamil Nadu, Karnataka, and West Bengal.',
-          disadvantages: "Studies show that rose petals can have a relaxing effect, helping to lower stress levels and encourage sleep. Rose petals are often included in flavored tea blends that contain anxiety-fighting l-theanine, or soothing herbal blends with other therapeutic ingredients like lavender and chamomile.",
-          price: '150/-',
-        },
-        {
-          name: 'Coral Jasmine',
-          image: 'coralJasmine.JPG',
-          importance: "Coral jasmine is used in the treatment of fungal skin infection, dry cough",
-          uses: "Coral jasmine is used in the treatment of fungal skin infection, dry cough, and bronchitis and as an antidote for snakebites",
-          availability: 'Maharashtra, Uttar Pradesh, West Bengal, Rajasthan, Andra Pradesh, Karnataka, Tamil Nadu',
-          disadvantages: "It causes vomiting, nausea, stomach irritation, etc.",
-          price: '199/-',
-        },
-        {
-          name: 'Tuberose',
-          image: 'tuberose.jpeg',
-          importance: "Tuberose can successfully be grown in pots, borders, and beds and commercially cultivated for its various uses.",
-          uses: "The flowers of tuberose are also used for making artistic garlands, floral ornaments, bouquets, buttonholes, gajras, and extraction of essential oil",
-          availability: 'Calcutta Single, Mexican Single, Phule Rajani, Prajwal, Rajat Rekha, Shringar, Khahikuchi Single, Hyderabad Single, Pune Single, Arka Nirantra',
-          disadvantages: "",
-          price: '250/-',
-        },
-        {
-          name: 'Crossandra Soundarya',
-          image: 'soundharya.jpeg',
-          importance: "Flower extract is used in various conditions like fever, headache, aperitif, pain and wound healing",
-          uses: "Crossandra (Crossandra infundibuliformis), is an evergreen subshrub sometimes called a firecracker flower, can be used as a houseplant or in the landscape. This tropical flower is easy to grow. This flowering plant blooms year-round.",
-          availability: 'southern India and Sri lanka',
-          disadvantages: "",
-          price: '50/-',
-        },
-        {
-          name: 'Hibiscus',
-          image: 'hibiscus.jpeg',
-          importance: "Hibiscus is high in antioxidants and offers many potential benefits. In particular, it may help promote weight loss, reduce the growth of bacteria and cancer cells, and support the health of the heart and liver. Hibiscus is available as an extract or, more often, a tea.",
-          uses: "Hibiscus preparations, including teas, powders, and extracts, have been shown to decrease blood pressure, reduce body fat, improve metabolic syndrome, protect the liver, and fight cancer cells",
-          availability: 'Tamil Nadu, Maharashtra, Karnataka, and Andhra Pradesh',
-          disadvantages: "Hibiscus seeds might have anti-nutritional factors that may reduce nutrient uptake, minimise food digestion, decrease nutrient bioavailability and produce flatulence (gas).",
-          price: '349/-',
-        },
-      ],
-      outdoor: [
-        {
-          name: 'Syzygium Myrtifolium',
-          image: 'myrtifolium.jpg',
-          importance: "Mainly grown for it's foliage. Syzygium myrtifolium commonly known as Lilly Pilly is very attractive plants for used in creating colourful topiary. It is very fast growing, evergreen, best for outdoor as shrub to medium size tree.",
-          uses: "used in creating colourful topiary.",
-          availability: 'Northeast India, Myanmar, Thailand, Peninsular Malaysia, Singapore, Sumatra, Borneo and the Philippines.',
-          disadvantages: "",
-          price: '499/-',
-        },
-        {
-          name: 'Ficus Religiosa',
-          image: 'ficus.jpeg',
-          importance: "Ficus religiosa is used in traditional medicine for about fifty types of disorders including asthma, diabetes, diarrhea, epilepsy, gastric problems, inflammatory disorders, infectious and sexual disorders.",
-          uses: "Ficus Religiosa treats a variety of mouth-related problems such as toothache, tooth decay, tooth stains, bleeding gums, bad breath, and mouth ulcers. Due to the anti-bacterial properties found in this plant, they can help your oral health by removing bacterias from the mouth.",
-          availability: 'Assam region, Eastern Himalaya and the Nicobar Islands',
-          disadvantages: "There is a need for more research to ascertain the potential use and side effects of peepal tree. It might have unknown side effects. Therefore, it is advised to consult your doctor before taking parts of the peepal tree.",
-          price: '209/-',
-        },
-        {
-          name: 'Kalpa vriksha',
-          image: 'kalpa.jpg',
-          importance: "The Banyan tree is also known as Kalpavriksha, because it is thought to grant wishes and provide other materialistic benefits.",
-          uses: "shade, food and medicines",
-          availability: 'situated on the banks of river Yamuna near Gayatri Tapobhoomi at the headquarters of Hamirpur city.',
-          disadvantages: "",
-          price: '699/-',
-        },
-        {
-          name: 'Neem',
-          image: 'neem.jpeg',
-          importance: "All parts of the neem tree- leaves, flowers, seeds, fruits, roots and bark have been used traditionally for the treatment of inflammation, infections, fever, skin diseases and dental disorders. The medicinal utilities have been described especially for neem leaf.",
-          uses: "treatment of inflammation, infections, fever, skin diseases and dental disorders.",
-          availability: 'Uttar Pradesh, Tamil Nadu and Karnataka',
-          disadvantages: "May damage the liver and kidneys and may also lower blood sugar levels. May interact with medications such as immunosuppressants, and diabetes medications. If you experience vomiting, diarrhea, or drowsiness after consuming neem, then seek medical help",
-          price: '49/-',
-        },
-        {
-          name: 'Rudraksha',
-          image: 'rudraksha.jpg',
-          importance: "In Ayurveda, the ancient medical system uses all parts of the Rudraksha tree for healing and balancing the body and mind. Rudraksha tree leaves treat a number of conditions like headache, migraine, epilepsy and mental disorders. The outer layer of the fruit was used to treat cold, flu and fever.",
-          uses: "The leaves of the rudraksha plant are believed to have several antibacterial and anti-inflammatory properties. The leaves of the rudraksha plant are used to treat wounds and conditions like epilepsy, migraine, and headaches. It also has a few dermatological benefits",
-          availability: 'Madhya Pradesh, Uttranchal, Arunachal Pradesh, Bengal, Haridwar, Garhwal',
-          disadvantages: "It gives peace of mind to the wearer, stimulates the mind and sharpens intellect. It awakens the kundalini or vital energies in the body. At and Emotional level rudrakshas heal depression, anxiety, autism, behavioural disorders. It also helps in healing heart ailments, neurotic and brain related disorders.",
-          price: '129/-',
-        },
-        {
-          name: 'Pongamia',
-          image: 'pongamia.jpg',
-          importance: "analgesic, arthritis and inflammatory activity",
-          uses: "treatment of tumors, piles, skin diseases, and ulcers",
-          availability: 'Odisha, Punjab, Rajasthan, Tamil Nadu, Andhra Pradesh',
-          disadvantages: "by using karanja plant extracts, sometimes when taken in pure form, it can be a bit dense on the body, skin, and hair. Karanja can also cause rashes on the body due to its hot potency, therefore, it is recommended that instead of using raw and pure karanja extract, products formulated with the ingredient are safer to use.",
-          price: '199/-',
-        },
-      ],
-     };
-    function showSpecies(category) {
-      const speciesList = document.querySelector('.species-list');
-      speciesList.innerHTML = '';
+    {
+      id: '1',
+      name: 'Betel Leaf',
+      image: 'betelLeaf.jpeg',
+      importance: 'Betel leaf or pan may help treat digestive issues and promote wound healing. It may be suitable for people with diabetes due to its hypoglycemic properties. The plant exhibits anti-cancer properties that may aid in cancer prevention and promote oral health.',
+      uses: 'Betel leaves are used as a stimulant, an antiseptic, and a breath-freshener.',
+      availability: 'Assam, Andhra Pradesh, Bihar, Gujarat, Odisha, Karnataka, Madhya Pradesh, Rajasthan, West Bengal and Maharashtra.',
+      disadvantages: 'overuse is linked with cancer and addiction.',
+      price: '200/-',
+    },
+    {
+      id: '2',
+        name: 'money plant golden',
+        image: 'moneyPlantGolden.jpg',
+        importance: 'One of the best benefits of placing a money plant in your house is keeping the home fresh and clean. It removes harmful pollutants in the air like carbon monoxide, xylene, benzene, and toluene. It also eliminates toxins and harmful chemicals present in the air.',
+        uses: 'Air purifier',
+        availability: 'Northern Australia through Southeast Asia into China, Japan, Bangladesh, India and Pakistan.',
+        disadvantages: 'possibility of financial problems, and if you are married, arguments and marital issues as well.',
+        price: '185/-',
+      },
+      {
+        id: '3',
+        name: 'Aglaonema Lipstick',
+        image: 'aglaonema.jpg',
+        importance: 'The Aglaonema Red Lipstick (Chinese Evergreen) helps to improve the air quality of indoor spaces with the ability to filter indoor air pollutants and toxins. Furthermore, this gorgeous leafy indoor plant emits Oxygen, which assists in increasing productivity and enriching health and well-being both in living and working spaces.',
+        uses: 'Air purifier, decorative plant & interior landscape plant.',
+        availability: ' tropical and sub-tropical areas of Asia',
+        disadvantages: 'swelling of the tongue, drooling, vomiting, and loss of appetite.',
+        price: '369/-',
+      },
+      {
+        id: '4',
+        name: 'Areca Palm',
+        image: 'ArecaPalm.jpg',
+        importance: 'The areca palm plant is known to increase oxygen levels by absorbing carbon dioxide and releasing more oxygen. Areca palm absorbs toxic substances in the air, like VOCs and pollutants and purifies the air we breathe. Areca palm is pet-friendly and is a safe bet for homes with pets.',
+        uses: 'Air purifierincrease oxygen levels by absorbing carbon dioxide and releasing more oxygen.',
+        availability: 'karnataka, kerala, Assam',
+        disadvantages: 'Yellowing leaves can indicate underwatering, and brown leaf tips are a sign of cold draughts or a dry atmosphere. Areca palms are also prone to attack by red spider mites and mealybugs. Red spider mites are tiny and hard to see, but mottled, yellowing leaves are a sign of their presence.',
+        price: '270/- to 300/-',
+      },
+      {
+        id: '5',
+        name: 'Lakshmi Tulasi',
+        image: 'lakshmiTulasi.jpeg',
+        importance: ' For centuries, the dried leaves have been mixed with stored grains to repel insects. Tulasi is a sacred plant for Hindus, is worshipped as the avatar of Goddess Lakshmi, may be planted in courtyards of Hindu houses or temples.',
+        uses: 'Tulasi has been used in Ayurveda and Siddha practices for its supposed treatment of diseases.',
+        availability: 'North central Indian',
+        disadvantages: 'can affect the health of a pregnant woman and her embryo.',
+        price: '300/-',
+      },
+      {
+        id: '6',
+        name: 'aloe vera',
+        image: 'aloeVera.jpeg',
+        importance: 'It contains healthful plant compounds, it has antioxidant and antibacterial properties, it reduces dental plaque and many more',
+        uses: 'Aloe vera has been traditionally used to treat skin injuries (burns, cuts, insect bites, and eczemas) and digestive problems because its anti-inflammatory, antimicrobial, and wound healing properties.',
+        availability: 'Rajasthan, Andhra Pradesh, Gujarat, Tamil Nadu, and Maharashtra.',
+        disadvantages: 'Topical and oral use of Aloe vera can cause skin irritation, hives, cramping, and diarrhea to those who are allergic to other plants in the lily family, for example, onion and tulips.',
+        price: '182/-',
+      },
+  ],
+  fruit: [
+    {
+      id: '7',
+      name: 'Orange',
+      image: 'orange.jpg',
+      importance: 'The fiber in oranges can keep blood sugar levels in check and reduce high cholesterol to prevent cardiovascular disease.',
+      uses: 'The vitamin C in oranges helps your body in lots of ways: Protects your cells from damage. Helps your body make collagen, a protein that heals wounds and gives you smoother skin. Makes it easier to absorb iron to fight anemia.',
+      availability: 'Telangana, Andhra Pradesh, Maharashtra, Madhya Pradesh, Karnataka, Punjab, Bihar, Assam, Mizoram and Jammu & Kashmir.',
+      disadvantages: 'it can lead to overconsumption of fibre',
+      price: '200/-',
+    },
+    {
+      id: '8',
+      name: 'Pomegranate',
+      image: 'pomegranate.jpeg',
+      importance: 'Antioxidants protect cells from damage and reduce inflammation and the effects of again',
+      uses: 'THeart health benefits, Anti-inflammatory properties.',
+      availability: 'Maharashtra, Gujarat, Karnataka, Andhra Pradesh, Tamil Nadu, Madhya Pradesh and Rajasthan.',
+      disadvantages: 'Some people have experienced sensitivity to pomegranate extract. Symptoms of sensitivity include itching, swelling, runny nose, and difficulty breathing. The root, stem, or peel of pomegranate is POSSIBLY UNSAFE when taken by mouth in large amounts. The root, stem, and peel contain poisons.',
+      price: '173/-',
+    },
+    {
+      id: '9',
+      name: 'Lemon',
+      image: 'lemon.jpeg',
+      importance: 'Vitamin C is an antioxidant, which helps protect cells from damage. Vitamin C also helps your body make collagen for your skin, helps your body absorb iron, and supports your immune system.',
+      uses: 'Supports heart health, help to boost immunity.May improve digestion.-Help to control weight',
+      availability: 'Gujarat, Andhra Pradesh, Maharashtra, Karnataka, Tamil Nadu, Bihar, Rajasthan, and Assam',
+      disadvantages: 'it can trigger the development of ulcers. The acid in lemons can harm the stomach and intestinal linings, leading to ulcers',
+      price: '199/-',
+    },
+    {
+      id: '10',
+      name: 'Mango',
+      image: 'mango.jpeg',
+      importance: "Mango is rich in vitamins, minerals, and antioxidants, and it has been associated with many health benefits, including potential anticancer effects, as well as improved immunity and digestive and eye health. Best of all, it's tasty and easy to add to your diet as part of smoothies and many other dishes.",
+      uses: "potential anticancer effects, as well as improved immunity and digestive and eye health. Best of all, it's tasty and easy to add to your diet as part of smoothies and many other dishes.",
+      availability: 'Andhra Pradesh, Uttar Pradesh, Karnataka, Bihar, Gujarat and Telangana',
+      disadvantages: 'After consuming certain mango species, some people may experience throat pain or allergy (stomach pain, sneezing and runny nose). Consuming mangoes in excess can result in gastrointestinal problems like stomach pain, indigestion and diarrhoea.',
+      price: '150/-',
+    },
+    {
+      id: '11',
+      name: 'Jack Fruit',
+      image: 'jackFruit.jpg',
+      importance: "Jackfruit is a good source of vitamin C, potassium, dietary fiber, and other important vitamins and minerals. Also, research suggests that compounds in the flesh, seeds, and other parts of the plant may potentially treat or prevent several health conditions. Jackfruit is a popular meat substitute.",
+      uses: "People eat the fruit and seeds of jackfruit tree as food or as medicine. Jackfruit is taken by mouth as an aphrodisiac or for diabetes. Jackfruit paste is applied to the skin for poisonous bites. Also, the wood of the jackfruit tree is used to make furniture or musical instruments.",
+      availability: 'Bihar, West Bengal, Uttar Pradesh, Assam, Orissa, Kerela and Tamil Nadu.',
+      disadvantages: 'After consuming certain mango species, some people may experience throat pain or allergy (stomach pain, sneezing and runny nose). Consuming mangoes in excess can result in gastrointestinal problems like stomach pain, indigestion and diarrhoeaThe high potassium content of Jackfruit can be harmful to people suffering from chronic kidney diseases or acute kidney failure.',
+      price: '154/-',
+    },
+    {
+      id: '12',
+      name: 'Water Apple',
+      image: 'waterApple.jpg',
+      importance: "It might be effective in reducing the dryness of the skin. Water apples contain a good amount of potassium. It may strengthen muscles and lower muscle cramps caused due to the low level of potassium. Vitamin C of the fruit might enhance the white blood cell production in the blood and also may boost the immune system",
+      uses: "It might be effective in reducing the dryness of the skin. Water apples contain a good amount of potassium. It may strengthen muscles and lower muscle cramps caused due to the low level of potassium.",
+      availability: 'low-elevation, tropical Andra Pradesh, Kerala, and the Western Ghats.',
+      disadvantages: 'While water apples are commercially sold as fully developed fruits, stems, leaves and roots contain trace amounts of hydrocyanic acid and are hence poisonous.Therefore, caution should be exercised before consuming water apples sourced from farms and other organic produce.',
+      price: '199/-',
+    },
+    {
+      id: '13',
+      name: 'Banana',
+      image: 'banana.jpeg',
+      importance: "They may improve your digestion and heart health, thanks to their fiber and antioxidant content. Plus, they may support weight loss because they're relatively low in calories, nutrient-dense, and filling. Both ripe (yellow) bananas and unripe (green) bananas can satisfy your sweet tooth and help keep you healthy.",
+      uses: "Asthma. A 2007 study suggested that eating bananas might help prevent wheezing in children with asthma. Heart health. Bananas contain fiber, potassium, folate, and antioxidants, such as vitamin C. All of these support heart health. Diabetes.",
+      availability: 'heavy clay soil of the Cauvery delta, alluvial soils of the Gangetic delta, black loam in Maharashtra, coastal sandy loams and the red lateritic soil of the hilly tracts of Kerala.',
+      disadvantages: 'Bananas are one of the best fruit sources of vitamin B6. It helps the body to produce red blood cells, metabolize carbohydrates and fats, metabolize amino acids, remove unwanted chemicals from your liver and kidneys, and maintain a healthy nervous system.',
+      price: '15/-',
+    },
+    {
+      id: '14',
+      name: 'Custard Apple',
+      image: 'custardApple.jpeg',
+      importance: "Custard apple is high in fibers, which helps digestion, prevents constipation, and detoxifies our body.",
+      uses: "Rich in fiber, vitamins, and minerals, this unique fruit may support immunity, reduce inflammation, and promote eye and heart health",
+      availability: 'Andhra Pradesh, Maharashtra, Karnataka, Bihar, Orissa, Assam, and Tamil Nadu.',
+      disadvantages: 'Custard apple seed has toxic effects on the skin and especially eyes. Studies state that application of Custard apple seed powder cause severe pain and redness in the skin. It might also cause extreme eye injury leading to blindness. So it generally advised to avoid the use of preparation of Custard apple seeds',
+      price: '359/-',
+    },
+    {
+      id: '15',
+      name: 'Amla',
+      image: 'amla.jpeg',
+      importance: "Amla has an important role in the traditional medicine of India to reduce anxiety and burning sensation in skin and eyes, improve anemic condition, favor the health of the male reproductive system and reproduction, facilitate digestion, improve liver health, and also exert a tonic effect in the cardiovascular system",
+      uses: "Helps Fight Against the Common Cold. Lowers Cholesterol Levels. Aids Weight Loss. Improve Digestive Processes.",
+      availability: 'Uttar Pradesh, Gujarat, Maharashtra, Madhya Pradesh, Rajasthan, and Tamil Nadu',
+      disadvantages: 'For some allergic people, intake of Amla products can increase the risk of bleeding. For a diabetic patient, Amla should be taken with proper precautions as its intake can drastically drop blood sugar levels. The dosage of Amla juice can lead to dryness of the skin.',
+      price: '149/-',
+    },
+    {
+      id: '16',
+      name: 'Guava',
+      image: 'guava.jpeg',
+      importance: "Various parts of the plant, including the leaf and the fruit, are used as medicine. People use guava leaf for stomach and intestinal conditions, pain, diabetes, and wound healing",
+      uses: "People use guava leaf for stomach and intestinal conditions, pain, diabetes, and wound healing.",
+      availability: 'Uttar Pradesh, Gujarat, Maharashtra, Madhya Pradesh, Rajasthan, and Tamil Nadu',
+      disadvantages: 'Guava leaf extract might cause temporary nausea or stomach pain in some people. When applied to the skin: Guava leaf extract is POSSIBLY SAFE when applied to the skin or inside the mouth as a rinse.',
+      price: '199/-',
+    },
+    {
+      id: '17',
+      name: 'Papaya',
+      image: 'papaya.jpeg',
+      importance: "Papayas contain high levels of antioxidants vitamin A, vitamin C, and vitamin E. Diets high in antioxidants may reduce the risk of heart disease. The antioxidants prevent the oxidation of cholesterol. When cholesterol oxidizes, it's more likely to create blockages that lead to heart diseas",
+      uses: "Papayas contain an enzyme called papain that aids digestion; in fact, it can be used as a meat tenderizer. Papaya is also high in fiber and water content, both of which help to prevent constipation and promote regularity and a healthy digestive tract.",
+      availability: 'Andhra Pradesh, Karnataka, Gujarat, Orissa, West Bengal, Assam, Kerala, Madhya Pradesh and Maharashtra.',
+      disadvantages: 'Papaya should not be consumed in excess as it can cause a variety of respiratory problems, including blocked breathing, wheezing, chronic nasal congestion, fever, and asthma.',
+      price: '129/-',
+    },
+    {
+      id: '18',
+      name: 'Apple',
+      image: 'apple.jpeg',
+      importance: "decoction and braking as a diuretic, antipyretic, analgesic, treatment for tuberculosis. lungs, rheumatism, boils, diarrhea.",
+      uses: "They're rich in fiber and antioxidants. Eating them is linked to a lower chance of getting many chronic conditions, including diabetes, heart disease, and cancer. Apples may also promote weight loss and improve gut and brain health.",
+      availability: 'Uttar Pradesh, Gujarat, Maharashtra, Madhya Pradesh, Rajasthan, and Tamil Jammu & Kashmir; Himachal Pradesh; hills of Uttar Pradesh and Uttaranchal. It is also cultivated to a small extent in Arunachal Pradesh; Nagaland; Punjab and Sikkim.',
+      disadvantages: "The seeds contain cyanide and are poisonous. Pregnancy and breast-feeding: Apples and apple juice are commonly consumed in the diet. But there isn't enough reliable information to know if apple is safe to use as medicine when pregnant or breast-feeding. Stay on the safe side and stick to food amounts.",
+      price: '160/-',
+    },
+  ],
+  flowering: [
+    {
+      id: '19',
+      name: 'Jasmine',
+      image: 'jasmine.jpeg',
+      importance: "Jasmine is used on the skin to reduce the amount of breast milk, for skin diseases, and to speed up wound healing. Jasmine is inhaled to improve mood, reduce stress, and reduce food cravings. In foods, jasmine is used to flavor beverages, frozen dairy desserts, candy, baked goods, gelatins, and puddings.",
+      uses: "Jasmine is used on the skin to reduce the amount of breast milk, for skin diseases, and to speed up wound healing. Jasmine is inhaled to improve mood, reduce stress, and reduce food cravings. In foods, jasmine is used to flavor beverages, frozen dairy desserts, candy, baked goods, gelatins, and puddings.",
+      availability: 'Tamil Nadu and Karnataka',
+      disadvantages: "Generally, consuming jasmine tea does not cause any harm. However, it does contain some amount of caffeine, which can cause problems in some people. Consuming too much caffeine can lead to or trigger problems like anxiety, restlessness, stomach problems and nervousness.",
+      price: '199/-',
+    },
+    {
+      id: '20',
+      name: 'Bhrama Kamala',
+      image: 'brahmaKamala.jpeg',
+      importance: "In spiritual practices, the Brahma Kamal flower is used in religious ceremonies and rituals. It is believed to have the power to purify the mind and soul and to bring inner peace and serenity. It is also said to have the power to protect from negative energy and evil spirits.",
+      uses: "In spiritual practices, the Brahma Kamal flower is used in religious ceremonies and rituals. It is believed to have the power to purify the mind and soul and to bring inner peace and serenity. It is also said to have the power to protect from negative energy and evil spirits.",
+      availability: 'Uttarkhand, Kedarnath, Badri- nath, and Tunganath',
+      disadvantages: "In spiritual practices, the Brahma Kamal flower is used in religious ceremonies and rituals. It is believed to have the power to purify the mind and soul and to bring inner peace and serenity. It is also said to have the power to protect from negative energy and evil spirits",
+      price: '499/-',
+    },
+    {
+      id: '21',
+      name: 'Roses',
+      image: 'rose.jpeg',
+      importance: "They supply insects with food, provide birds with nesting sites, and shelter small mammal",
+      uses: "Regular consumption of rose tea is good for boosting the immune system and preventing different diseases. Rose tea is good for expelling toxins from the body. Its use is excellent for skincare and hair care. Eating dried rose petals helps in eliminating unwanted body fat and weight loss",
+      availability: 'Maharashtra, Tamil Nadu, Karnataka, and West Bengal.',
+      disadvantages: "Studies show that rose petals can have a relaxing effect, helping to lower stress levels and encourage sleep. Rose petals are often included in flavored tea blends that contain anxiety-fighting l-theanine, or soothing herbal blends with other therapeutic ingredients like lavender and chamomile.",
+      price: '150/-',
+    },
+    {
+      id: '22',
+      name: 'Coral Jasmine',
+      image: 'coralJasmine.JPG',
+      importance: "Coral jasmine is used in the treatment of fungal skin infection, dry cough",
+      uses: "Coral jasmine is used in the treatment of fungal skin infection, dry cough, and bronchitis and as an antidote for snakebites",
+      availability: 'Maharashtra, Uttar Pradesh, West Bengal, Rajasthan, Andra Pradesh, Karnataka, Tamil Nadu',
+      disadvantages: "It causes vomiting, nausea, stomach irritation, etc.",
+      price: '199/-',
+    },
+    {
+      id : '23',
+      name: 'Tuberose',
+      image: 'tuberose.jpeg',
+      importance: "Tuberose can successfully be grown in pots, borders, and beds and commercially cultivated for its various uses.",
+      uses: "The flowers of tuberose are also used for making artistic garlands, floral ornaments, bouquets, buttonholes, gajras, and extraction of essential oil",
+      availability: 'Calcutta Single, Mexican Single, Phule Rajani, Prajwal, Rajat Rekha, Shringar, Khahikuchi Single, Hyderabad Single, Pune Single, Arka Nirantra',
+      disadvantages: "",
+      price: '250/-',
+    },
+    {
+      id : '24',
+      name: 'Crossandra Soundarya',
+      image: 'soundharya.jpeg',
+      importance: "Flower extract is used in various conditions like fever, headache, aperitif, pain and wound healing",
+      uses: "Crossandra (Crossandra infundibuliformis), is an evergreen subshrub sometimes called a firecracker flower, can be used as a houseplant or in the landscape. This tropical flower is easy to grow. This flowering plant blooms year-round.",
+      availability: 'southern India and Sri lanka',
+      disadvantages: "",
+      price: '50/-',
+    },
+    {
+      id : '25',
+      name: 'Hibiscus',
+      image: 'hibiscus.jpeg',
+      importance: "Hibiscus is high in antioxidants and offers many potential benefits. In particular, it may help promote weight loss, reduce the growth of bacteria and cancer cells, and support the health of the heart and liver. Hibiscus is available as an extract or, more often, a tea.",
+      uses: "Hibiscus preparations, including teas, powders, and extracts, have been shown to decrease blood pressure, reduce body fat, improve metabolic syndrome, protect the liver, and fight cancer cells",
+      availability: 'Tamil Nadu, Maharashtra, Karnataka, and Andhra Pradesh',
+      disadvantages: "Hibiscus seeds might have anti-nutritional factors that may reduce nutrient uptake, minimise food digestion, decrease nutrient bioavailability and produce flatulence (gas).",
+      price: '349/-',
+    },
+  ],
+  outdoor: [
+    {
+      id : '26',
+      name: 'Syzygium Myrtifolium',
+      image: 'myrtifolium.jpg',
+      importance: "Mainly grown for it's foliage. Syzygium myrtifolium commonly known as Lilly Pilly is very attractive plants for used in creating colourful topiary. It is very fast growing, evergreen, best for outdoor as shrub to medium size tree.",
+      uses: "used in creating colourful topiary.",
+      availability: 'Northeast India, Myanmar, Thailand, Peninsular Malaysia, Singapore, Sumatra, Borneo and the Philippines.',
+      disadvantages: "",
+      price: '499/-',
+    },
+    {
+      id : '27',
+      name: 'Ficus Religiosa',
+      image: 'ficus.jpeg',
+      importance: "Ficus religiosa is used in traditional medicine for about fifty types of disorders including asthma, diabetes, diarrhea, epilepsy, gastric problems, inflammatory disorders, infectious and sexual disorders.",
+      uses: "Ficus Religiosa treats a variety of mouth-related problems such as toothache, tooth decay, tooth stains, bleeding gums, bad breath, and mouth ulcers. Due to the anti-bacterial properties found in this plant, they can help your oral health by removing bacterias from the mouth.",
+      availability: 'Assam region, Eastern Himalaya and the Nicobar Islands',
+      disadvantages: "There is a need for more research to ascertain the potential use and side effects of peepal tree. It might have unknown side effects. Therefore, it is advised to consult your doctor before taking parts of the peepal tree.",
+      price: '209/-',
+    },
+    {
+      id : '28',
+      name: 'Kalpa vriksha',
+      image: 'kalpa.jpg',
+      importance: "The Banyan tree is also known as Kalpavriksha, because it is thought to grant wishes and provide other materialistic benefits.",
+      uses: "shade, food and medicines",
+      availability: 'situated on the banks of river Yamuna near Gayatri Tapobhoomi at the headquarters of Hamirpur city.',
+      disadvantages: "",
+      price: '699/-',
+    },
+    {
+      id : '29',
+      name: 'Neem',
+      image: 'neem.jpeg',
+      importance: "All parts of the neem tree- leaves, flowers, seeds, fruits, roots and bark have been used traditionally for the treatment of inflammation, infections, fever, skin diseases and dental disorders. The medicinal utilities have been described especially for neem leaf.",
+      uses: "treatment of inflammation, infections, fever, skin diseases and dental disorders.",
+      availability: 'Uttar Pradesh, Tamil Nadu and Karnataka',
+      disadvantages: "May damage the liver and kidneys and may also lower blood sugar levels. May interact with medications such as immunosuppressants, and diabetes medications. If you experience vomiting, diarrhea, or drowsiness after consuming neem, then seek medical help",
+      price: '49/-',
+    },
+    {
+      id : '30',
+      name: 'Rudraksha',
+      image: 'rudraksha.jpg',
+      importance: "In Ayurveda, the ancient medical system uses all parts of the Rudraksha tree for healing and balancing the body and mind. Rudraksha tree leaves treat a number of conditions like headache, migraine, epilepsy and mental disorders. The outer layer of the fruit was used to treat cold, flu and fever.",
+      uses: "The leaves of the rudraksha plant are believed to have several antibacterial and anti-inflammatory properties. The leaves of the rudraksha plant are used to treat wounds and conditions like epilepsy, migraine, and headaches. It also has a few dermatological benefits",
+      availability: 'Madhya Pradesh, Uttranchal, Arunachal Pradesh, Bengal, Haridwar, Garhwal',
+      disadvantages: "It gives peace of mind to the wearer, stimulates the mind and sharpens intellect. It awakens the kundalini or vital energies in the body. At and Emotional level rudrakshas heal depression, anxiety, autism, behavioural disorders. It also helps in healing heart ailments, neurotic and brain related disorders.",
+      price: '129/-',
+    },
+    {
+      id : '31',
+      name: 'Pongamia',
+      image: 'pongamia.jpg',
+      importance: "analgesic, arthritis and inflammatory activity",
+      uses: "treatment of tumors, piles, skin diseases, and ulcers",
+      availability: 'Odisha, Punjab, Rajasthan, Tamil Nadu, Andhra Pradesh',
+      disadvantages: "by using karanja plant extracts, sometimes when taken in pure form, it can be a bit dense on the body, skin, and hair. Karanja can also cause rashes on the body due to its hot potency, therefore, it is recommended that instead of using raw and pure karanja extract, products formulated with the ingredient are safer to use.",
+      price: '199/-',
+    },
+  ],
+ };
 
-      speciesData[category].forEach((species) => {
-        const speciesItem = document.createElement('div');
-        speciesItem.classList.add('species-item');
-        speciesItem.innerHTML = `
+      const cart = [];
+
+      function showCategory(category) {
+        const speciesList = document.querySelector('.species-list');
+        speciesList.innerHTML = '';
+  
+        speciesData[category].forEach((species) => {
+          const speciesItem = document.createElement('div');
+          speciesItem.classList.add('species-item');
+          speciesItem.innerHTML = `
+            <img src="${species.image}" alt="${species.name}">
+            <span>${species.name}</span>
+          `;
+          speciesItem.onclick = () => showPlantInfo(species);
+          speciesList.appendChild(speciesItem);
+        });
+      }
+  
+      function showPlantInfo(species) {
+        const plantInfo = document.querySelector('.products');
+        plantInfo.innerHTML = `
+          <h3>${species.name}</h3>
           <img src="${species.image}" alt="${species.name}">
-          <span>${species.name}</span>
+          <p><b>Importance:</b> ${species.importance}</p>
+          <p><b>Uses:</b> ${species.uses}</p>
+          <p><b>Region of Availability:</b> ${species.availability}</p>
+          <p><b>Disadvantages:</b> ${species.disadvantages}</p>
+          <p><b>Price in Indian Rupees:</b> ${species.price}</p>
+          <button onclick="addToCart('${species.id}', '${species.name}', '${species.price}')">Add to Cart</button>
         `;
-        speciesItem.onclick = () => showPlantInfo(species);
-        speciesList.appendChild(speciesItem);
-      });
+  
+        plantInfo.scrollIntoView({ behavior: 'smooth' }, true);
+      }
+      function addToCart(productId, productName, productPrice) {
+        cart.push({ id: productId, name: productName, price: productPrice });
+        updateCart();
     }
 
-    function showPlantInfo(species) {
-      const plantInfo = document.querySelector('.plant-info');
-      plantInfo.innerHTML = `
-        <h3>${species.name}</h3>
-        <img src="${species.image}" alt="${species.name}">
-        <p><b>Importance:</b> ${species.importance}</p>
-        <p><b>Uses:</b> ${species.uses}</p>
-        <p><b>Region of Availability:</b> ${species.availability}</p>
-        <p><b>Disadvantages:</b> ${species.disadvantages}</p>
-        <p><b>Price in Indian Rupees:</b> ${species.price}</p>
-      `;
+    function updateCart() {
+        const cartItemsHtml = cart.map(item => `
+            <div class="cart-item">
+                <p>${item.name}</p>
+                <p>Price: $${parseFloat(item.price).toFixed(2)}</p>
+            </div>
+        `).join('');
 
-      plantInfo.scrollIntoView({ behavior: 'smooth' }, true);
+        const total = cart.reduce((acc, item) => acc + parseFloat(item.price), 0);
+        document.querySelector('#cart-items').innerHTML = cartItemsHtml;
+        document.querySelector('#cart-total').textContent = `Total: $${total.toFixed(2)}`;
+
     }
-  </script>
+
+    function checkout() {
+        alert('Checkout button clicked. This is just a prototype.');
+    }
+
+    // You need to have the speciesData array defined somewhere in your code.
+
+    showCategory('indoor');
+</script>
 </body>
 
 </html>
