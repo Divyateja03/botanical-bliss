@@ -10,7 +10,77 @@
   margin: 0;
   padding: 0;
   display: flex;
+  justify-content: center;<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login page</title>
+    <style>
+        body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container {
+  width: 400px;
+  background-color:rgb(9, 192, 76);
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #0e15d5;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #230bd9;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+    <form method="get" action="loginsubmit">
+        Email<input type="email" name="email" placeholder="enter your email"><br>
+        Password<input type="password" name="password" placeholder="enter your pasword"><br>
+        <button type="submit">LOGIN</button>
+    </form>
+    </div>
+</body>
+</html>
   align-items: center;
   height: 100vh;
   background-color: #83d9e7;
