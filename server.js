@@ -38,5 +38,5 @@ app.get('/signupsubmit', function (req, res) {
     })
     })
 app.listen(5000, function () {  
-console.log('Example app listening on port 5000!')
-})
+console.log('Server is running on http://localhost:5000');
+});
